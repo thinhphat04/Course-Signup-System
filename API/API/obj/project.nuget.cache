@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6BQGuJWt5LY=",
+  "dgSpecHash": "9TegoGBSzFI=",
   "success": true,
-  "projectFilePath": "/Users/ngothinhphat/RiderProjects/API/API/API.csproj",
+  "projectFilePath": "/Users/ngothinhphat/Desktop/Course Signup System/API/API/API.csproj",
   "expectedPackageFiles": [
     "/Users/ngothinhphat/.nuget/packages/automapper/13.0.1/automapper.13.0.1.nupkg.sha512",
     "/Users/ngothinhphat/.nuget/packages/azure.core/1.25.0/azure.core.1.25.0.nupkg.sha512",

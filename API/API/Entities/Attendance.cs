@@ -8,5 +8,5 @@ public class Attendance
     public string Status { get; set; } // Present, Absent
 
     // Relationships
-    public virtual Enrollment Enrollment { get; set; }
+    public  Enrollment Enrollment { get; set; }
 }

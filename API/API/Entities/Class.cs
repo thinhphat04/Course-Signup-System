@@ -9,9 +9,9 @@ public class Class
     public string Room { get; set; }
 
     // Relationships
-    public virtual Course Course { get; set; }
-    public virtual Teacher Teacher { get; set; }
-    public virtual ICollection<Enrollment> Enrollments { get; set; }
-    public virtual ICollection<TeacherAssignment> TeacherAssignments { get; set; } // Add this line
+    public  Course Course { get; set; }
+    public  Teacher Teacher { get; set; }
+    public  ICollection<Enrollment> Enrollments { get; set; }
+    public  ICollection<TeacherAssignment> TeacherAssignments { get; set; } // Add this line
 
 }

@@ -8,5 +8,5 @@ public class Subject
     public int Credits { get; set; }
 
     // Relationships
-    public virtual Department Department { get; set; }
+    public Department Department { get; set; }
 }

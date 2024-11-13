@@ -11,6 +11,6 @@ public class User
     public string PhoneNumber { get; set; }
     
     // Relationships
-    public virtual Student Student { get; set; }
-    public virtual Teacher Teacher { get; set; }
+    public Student Student { get; set; }
+    public Teacher Teacher { get; set; }
 }

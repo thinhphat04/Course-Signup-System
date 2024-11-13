@@ -9,8 +9,8 @@ public class Enrollment
     public string Status { get; set; } // Active, Completed, Canceled
 
     // Relationships
-    public virtual Student Student { get; set; }
-    public virtual Class Class { get; set; }
-    public virtual ICollection<Attendance> Attendances { get; set; }
-    public virtual ICollection<Grade> Grades { get; set; }
+    public  Student Student { get; set; }
+    public  Class Class { get; set; }
+    public  ICollection<Attendance> Attendances { get; set; }
+    public  ICollection<Grade> Grades { get; set; }
 }

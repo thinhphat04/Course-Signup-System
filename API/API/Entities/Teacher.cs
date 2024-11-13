@@ -7,8 +7,8 @@ public class Teacher
     public string Specialization { get; set; }
 
     // Relationships
-    public virtual User User { get; set; }
-    public virtual ICollection<Class> Classes { get; set; }
-    public virtual ICollection<Salary> Salaries { get; set; }
-    public virtual ICollection<TeacherAssignment> TeacherAssignments { get; set; }
+    public User User { get; set; }
+    public ICollection<Class> Classes { get; set; }
+    public ICollection<Salary> Salaries { get; set; }
+    public ICollection<TeacherAssignment> TeacherAssignments { get; set; }
 }

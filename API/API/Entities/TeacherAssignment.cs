@@ -9,6 +9,6 @@ public class TeacherAssignment
     public DateTime AssignedDate { get; set; }
 
     // Relationships
-    public virtual Teacher Teacher { get; set; }
-    public virtual Class Class { get; set; }
+    public Teacher Teacher { get; set; }
+    public Class Class { get; set; }
 }

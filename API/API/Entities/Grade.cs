@@ -9,6 +9,6 @@ public class Grade
     public DateTime DateRecorded { get; set; }
 
     // Relationships
-    public virtual Enrollment Enrollment { get; set; }
-    public virtual GradeType GradeType { get; set; }
+    public Enrollment Enrollment { get; set; }
+    public GradeType GradeType { get; set; }
 }

@@ -7,5 +7,5 @@ public class Department
     public string Description { get; set; }
 
     // Relationships
-    public virtual ICollection<Subject> Subjects { get; set; }
+    public  ICollection<Subject> Subjects { get; set; }
 }

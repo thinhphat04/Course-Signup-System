@@ -7,5 +7,5 @@ public class GradeType
     public string Description { get; set; }
 
     // Relationships
-    public virtual ICollection<Grade> Grades { get; set; }
+    public ICollection<Grade> Grades { get; set; }
 }

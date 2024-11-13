@@ -8,6 +8,6 @@ public class Student
     public string Address { get; set; }
 
     // Relationships
-    public virtual User User { get; set; }
-    public virtual ICollection<Enrollment> Enrollments { get; set; }
+    public User User { get; set; }
+    public ICollection<Enrollment> Enrollments { get; set; }
 }

@@ -8,5 +8,5 @@ public class Salary
     public decimal Amount { get; set; }
 
     // Relationships
-    public virtual Teacher Teacher { get; set; }
+    public Teacher Teacher { get; set; }
 }

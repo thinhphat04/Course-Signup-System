@@ -11,5 +11,5 @@ public class Course
     public string Promotion { get; set; }
 
     // Relationships
-    public virtual ICollection<Class> Classes { get; set; }
+    public ICollection<Class> Classes { get; set; }
 }
