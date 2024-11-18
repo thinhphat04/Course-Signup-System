@@ -1,6 +1,11 @@
+using System.Text;
 using API.Data;
+using API.Interfaces;
 using API.Middlewares;
+using API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +16,29 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<CourseSystemContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection"))); // Lấy chuỗi kết nối từ appsettings.json
 
+
+builder.Services.AddControllers();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddLogging();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            // Thiết lập các tùy chọn xác thực JWT
+            ValidateIssuer = true, // Kiểm tra Issuer (người phát hành token)
+            ValidateAudience = true, // Kiểm tra Audience (đối tượng nhận token)
+            ValidateLifetime = true, // Kiểm tra thời hạn token
+            ValidateIssuerSigningKey = true, // Kiểm tra khóa ký token
+            ValidIssuer = builder.Configuration["Jwt:Issuer"], // Issuer hợp lệ, lấy từ cấu hình
+            ValidAudience = builder.Configuration["Jwt:Audience"], // Audience hợp lệ, lấy từ cấu hình
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])) // Khóa ký token, lấy từ cấu hình
+        };
+    });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,6 +50,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseAuthorization();
+app.UseAuthentication();
+
 
 var summaries = new[]
 {

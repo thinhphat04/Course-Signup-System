@@ -1,12 +1,9 @@
-using API.Entities;
+using API.Dto;
 
 namespace API.Interfaces;
 
 public interface IAuthService
 {
-    Task<User> AuthenticateAdminAsync(string username, string password);
-    Task<User> AuthenticateTeacherAsync(string username, string password);
-    Task<User> AuthenticateStudentAsync(string username, string password);
-    Task LogoutAsync(int userId);
+    Task<LoginResponse> AuthenticateAsync(string username, string password, string role);
     Task<bool> ResetPasswordAsync(int userId, string newPassword);
 }

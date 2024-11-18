@@ -10,4 +10,8 @@ public interface IUserService
     Task<IEnumerable<User>> GetAllUsersAsync();
     Task<User> UpdateUserAsync(int userId, User user);
     Task<bool> DeleteUserAsync(int userId);
+
+    // Added methods for JWT token handling
+    Task<string> GenerateAccessTokenAsync(User user);
+    Task<string> GenerateRefreshTokenAsync();
 }

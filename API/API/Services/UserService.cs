@@ -1,17 +1,24 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 using API.Data;
 using API.Entities;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API.Services;
 
 public class UserService : IUserService
 {
     private readonly CourseSystemContext _context;
+    private readonly IConfiguration _configuration;
 
-    public UserService(CourseSystemContext context)
+    public UserService(CourseSystemContext context, IConfiguration configuration)
     {
         _context = context;
+        _configuration = configuration;
     }
 
     public async Task<User> CreateUserAsync(User user)
@@ -57,5 +64,44 @@ public class UserService : IUserService
 
         _context.Users.Remove(user);
         return await _context.SaveChangesAsync() > 0;
+    }
+
+    // Generate JWT Access Token
+    public async Task<string> GenerateAccessTokenAsync(User user)
+    {
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Role, user.Role) // Add role claims
+        };
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.UtcNow.AddMinutes(30),
+            SigningCredentials = creds,
+            Audience = _configuration["Jwt:Audience"],
+            Issuer = _configuration["Jwt:Issuer"]
+        };
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+
+        return tokenHandler.WriteToken(token);
+    }
+
+    // Generate Refresh Token
+    public async Task<string> GenerateRefreshTokenAsync()
+    {
+        var randomNumber = new byte[32];
+        using (var rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
+        }
     }
 }
