@@ -1,8 +1,8 @@
 using System.Text;
-using API.Data;
-using API.Interfaces;
+using API.Entities;
+
 using API.Middlewares;
-using API.Services;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -14,15 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 builder.Services.AddControllers();
-builder.Services.AddAutoMapper(typeof(Program)); 
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<ITeacherService, TeacherService>();
-builder.Services.AddScoped<IStudentService, StudentService>();
+
+
+
 builder.Services.AddLogging();
+
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -40,7 +38,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddDbContext<CourseSystemContext>(options =>
+builder.Services.AddDbContext<CourseSystemDB>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection"))); // Lấy chuỗi kết nối từ appsettings.json
 
 var app = builder.Build();
@@ -77,6 +75,8 @@ app.MapGet("/weatherforecast", () =>
     })
     .WithName("GetWeatherForecast")
     .WithOpenApi();
+
+app.UseRouting();
 
 app.Run();
 

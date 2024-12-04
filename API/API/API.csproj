@@ -22,8 +22,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Dto\Admin\" />
       <Folder Include="Extensions\" />
+      <Folder Include="Interfaces\" />
+      <Folder Include="Services\" />
+      <Folder Include="wwwroot\Image\" />
     </ItemGroup>
 
 </Project>

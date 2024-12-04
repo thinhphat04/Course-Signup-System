@@ -1,11 +1,17 @@
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
 namespace API.Entities;
+    public class Department// tổ bộ môn
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public int DepartmentId { get; set; }
 
-public class Department
-{
-    public int DepartmentId { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
+        [StringLength(150)]
+        public string DepartmentName { get; set; } = null!;
 
-    // Relationships
-    public  ICollection<Subject> Subjects { get; set; }
-}
+        public ICollection<Subject> Subjects { get; set; } = new List<Subject>();
+
+        public ICollection<SubjectClass> SubjectClasses { get; set; } = new List<SubjectClass>();
+    }

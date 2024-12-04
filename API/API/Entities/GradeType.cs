@@ -1,11 +1,20 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace API.Entities;
+    public class GradeType //Loại điểm số
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public int GradeTypeId { get; set; }
 
-public class GradeType
-{
-    public int GradeTypeId { get; set; }
-    public string Name { get; set; } // Midterm, Final, etc.
-    public string Description { get; set; }
+        [StringLength(150)]
+        public string GradeTypeName { get; set; } = null!;
 
-    // Relationships
-    public ICollection<Grade> Grades { get; set; }
-}
+        public int Coefficient { get; set; } //hệ số
+
+        public ICollection<Grade> Grade { get; set; } = null!;
+
+        public ICollection<SubjectGradeType> SubjectGradeType { get; set; } = new List<SubjectGradeType>();
+    }
+

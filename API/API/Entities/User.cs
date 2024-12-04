@@ -1,16 +1,40 @@
-namespace API.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class User
-{
-    public int UserId { get; set; }
-    public string Username { get; set; }
-    public string Password { get; set; }
-    public string Role { get; set; } // Admin, Teacher, Student
-    public string FullName { get; set; }
-    public string Email { get; set; }
-    public string PhoneNumber { get; set; }
-    
-    // Relationships
-    public Student Student { get; set; }
-    public Teacher Teacher { get; set; }
-}
+namespace API.Entities;
+    public class User
+    {
+        [Key]
+        [StringLength(13)]
+        public string UserId { get; set; } = null!;
+        [StringLength(50)]
+        public string FirstName { get; set; } = null!; // Ten 
+
+        [StringLength(50)]
+        public string LastName { get; set; } = null!; // Ho
+
+        [StringLength(255)]
+        public string Email { get; set; } = null!;
+      
+        [StringLength(255)]
+        public string PasswordHash { get; set; } = null!;
+
+        [StringLength(255)]
+        public string PasswordSalt { get; set; } = null!;
+
+        [StringLength(255)]
+        public string? Avatar {  get; set; }
+        [StringLength(6)]
+        public string? VerificationCode { get; set; } = null!;
+
+        public DateTime? CreateAt { get; set; }
+
+        public DateTime? UpdateAt { get; set; }
+
+        public int RoleId { get; set; }
+        [ForeignKey("RoleId")]
+        public Role Role { get; set; } = null!;
+
+    }
+

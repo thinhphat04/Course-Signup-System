@@ -1,14 +1,25 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace API.Entities;
+    public class Grade // thêm điểm
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public int GradeId {  get; set; }
 
-public class Grade
-{
-    public int GradeId { get; set; }
-    public int EnrollmentId { get; set; }
-    public int GradeTypeId { get; set; }
-    public double Score { get; set; }
-    public DateTime DateRecorded { get; set; }
+        public string UserId { get; set; } = null!;
+        [ForeignKey("UserId")]
+        public Student Student { get; set; } = null!;
 
-    // Relationships
-    public Enrollment Enrollment { get; set; }
-    public GradeType GradeType { get; set; }
-}
+        public string SubjectId { get; set; } = null!;
+        [ForeignKey("SubjectId")]
+        public Subject Subject { get; set; } = null!;
+
+        public int GradeTypeId { get; set; }
+        [ForeignKey("GradeTypeId")]
+        public GradeType GradeType { get; set; } = null!;
+
+        public ICollection<GradeColumn> GradeColumn { get; set; } = new List<GradeColumn>();
+    }
+
