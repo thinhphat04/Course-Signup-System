@@ -7,7 +7,7 @@ namespace API.Entities;
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public int PayTuitionId { get; set; }
+        public int TuitionFeePaymentId { get; set; }
 
         public double Tuition { get; set; } // học phí
 

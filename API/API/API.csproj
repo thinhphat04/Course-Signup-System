@@ -9,6 +9,7 @@
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="13.0.1" />
         <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+        <PackageReference Include="MailKit" Version="4.8.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
         <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
@@ -22,8 +23,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Common\mappings\" />
+      <Folder Include="Controllers\" />
       <Folder Include="Extensions\" />
       <Folder Include="Interfaces\" />
+      <Folder Include="Repositories\" />
       <Folder Include="Services\" />
       <Folder Include="wwwroot\Image\" />
     </ItemGroup>

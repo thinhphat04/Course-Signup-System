@@ -11,8 +11,8 @@ namespace API.Entities;
 
         public int MandatoryColumnGrade { get; set; }// số cột điểm bắt buộc
 
-        public string ClassOfId { get; set; } = null!;
-        [ForeignKey("ClassOfId")]
+        public string CourseGroupId { get; set; } = null!;
+        [ForeignKey("CourseGroupId")]
         public CourseGroup CourseGroup { get; set; } = null!;
 
         public string SubjectId { get; set; } = null!;

@@ -10,6 +10,6 @@ namespace API.Entities;
 
         public string TuitionName { get; set; } = null!;
 
-        public ICollection<TuitionFeePayment> PayTuitions { get; set; } = new List<TuitionFeePayment>();
+        public ICollection<TuitionFeePayment> TuitionFeePayments { get; set; } = new List<TuitionFeePayment>();
     }
 

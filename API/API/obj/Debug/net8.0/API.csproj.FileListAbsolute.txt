@@ -291,3 +291,8 @@
 /Users/ngothinhphat/Desktop/Course Signup System/API/API/obj/Debug/net8.0/API.pdb
 /Users/ngothinhphat/Desktop/Course Signup System/API/API/obj/Debug/net8.0/API.genruntimeconfig.cache
 /Users/ngothinhphat/Desktop/Course Signup System/API/API/obj/Debug/net8.0/ref/API.dll
+/Users/ngothinhphat/Desktop/Course Signup System/API/API/bin/Debug/net8.0/API.staticwebassets.runtime.json
+/Users/ngothinhphat/Desktop/Course Signup System/API/API/bin/Debug/net8.0/BouncyCastle.Cryptography.dll
+/Users/ngothinhphat/Desktop/Course Signup System/API/API/bin/Debug/net8.0/MailKit.dll
+/Users/ngothinhphat/Desktop/Course Signup System/API/API/bin/Debug/net8.0/MimeKit.dll
+/Users/ngothinhphat/Desktop/Course Signup System/API/API/bin/Debug/net8.0/System.Formats.Asn1.dll

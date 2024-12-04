@@ -1,21 +1,101 @@
 using System.Text;
+using System.Text.Json.Serialization;
+using API.Common.Mapping;
 using API.Entities;
 
 using API.Middlewares;
-
+using API.Repositories;
+using API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyCors",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000")
+                .AllowAnyMethod() // Allow any HTTP method
+                .AllowAnyHeader()
+                .AllowCredentials();
+        });
+});
+
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-builder.Services.AddControllers();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Jwt auth header",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer",
+                },
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = ParameterLocation.Header
+            },
+            new List<string>()
+        }
+    });
+});
+// Đăng ký dịch vụ Controller để hỗ trợ API
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 
+});
+//Sử dụng ReferenceHandler.Preserve
+// builder.Services.AddControllers().AddJsonOptions(options =>
+// {
+//     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+//     options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+// });
+ builder.Services.AddAutoMapper(typeof(MapperProfile));
+            builder.Services.AddScoped<IUserService, UserRepository>();
+            builder.Services.AddScoped<IHashPasword, HashPasswordRepository>();
+            builder.Services.AddScoped<IRoleService, RoleRepository>();
+            builder.Services.AddScoped<IStudentService, StudentRepository>();
+            builder.Services.AddScoped<ITeacherService, TeacherRepository>();
+            builder.Services.AddScoped<IGenerateService,GenerateRepository>();
+            builder.Services.AddScoped<IAuthService,AuthRepository>();
+            builder.Services.AddScoped<ITuitionFeePaymentService, TuitionFeePaymentRepository>(); // **Add this line**
+            builder.Services.AddScoped<IClassService, ClassRepository>();
+            builder.Services.AddScoped<IFacultyService, FacultyRepository>();
+            builder.Services.AddScoped<IStudentClassService,StudentClassRepository>();
+            builder.Services.AddScoped<ISubjectService, SubjectRepository>();
+            builder.Services.AddScoped<IDepartmentService, DepartmentRepository>();
+            builder.Services.AddScoped<IFileStorageService, FileStorageRepository>();
+            builder.Services.AddScoped<ISubjectClassService,SubjectClassRepository>();
+            builder.Services.AddScoped<ITeacherScheduleService, TeacherScheduleRepository>();
+            builder.Services.AddScoped<IGradeTypeService, GradeTypeRepository>();
+            builder.Services.AddScoped<ITuitionTypeService, TuitionTypeRepository>();
+            builder.Services.AddScoped<ICourseGroupService, CourseGroupRepository>(); // **Add this line**
+            builder.Services.AddScoped<IGradeService, GradeRepository>();
+            builder.Services.AddScoped<ISubjectGradeTypeService,SubjectGradeTypeRepository>();
+            builder.Services.AddScoped<IGradeColumnService, GradeColumnRepository>();
+            builder.Services.AddScoped<ISchoolHolidayScheduleService, SchoolHolidayScheduleRepository>();
+            builder.Services.AddScoped<IEmployeeSalaryService,EmployeeSalaryRepository>();
+            builder.Services.AddScoped<IPermissionService, PermissionRepository>();
 
 
 builder.Services.AddLogging();
@@ -50,37 +130,22 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-app.UseMiddleware<ExceptionMiddleware>();
-app.UseAuthorization();
-app.UseAuthentication();
 
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
 
 app.UseRouting();
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+
+
+app.UseHttpsRedirection();
+app.UseCors("MyCors");
+
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

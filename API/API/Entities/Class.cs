@@ -25,8 +25,8 @@ namespace API.Entities;
         [StringLength(255)]
         public string? Avatar {  get; set; }=null!;
 
-        public string ClassOfId { get; set; } = null!;
-        [ForeignKey("ClassOfId")]
+        public string CourseGroupId { get; set; } = null!;
+        [ForeignKey("CourseGroupId")]
         public CourseGroup CourseGroup { get; set; } = null!;
 
         public string FacultyId { get; set; } = null!;

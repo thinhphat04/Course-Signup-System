@@ -18,7 +18,7 @@ namespace API.Entities;
         public Class Class { get; set; } = null!;
 
         public DateTime CreateAt { get; set; }
-        public ICollection<TuitionFeePayment> PayTuitions { get; set; } = new List<TuitionFeePayment>();
+        public ICollection<TuitionFeePayment> TuitionFeePayments { get; set; } = new List<TuitionFeePayment>();
 
     }
 
