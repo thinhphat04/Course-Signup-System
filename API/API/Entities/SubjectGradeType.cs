@@ -13,7 +13,7 @@ namespace API.Entities;
 
         public string ClassOfId { get; set; } = null!;
         [ForeignKey("ClassOfId")]
-        public ClassOf ClassOf { get; set; } = null!;
+        public CourseGroup CourseGroup { get; set; } = null!;
 
         public string SubjectId { get; set; } = null!;
         [ForeignKey("SubjectId")]

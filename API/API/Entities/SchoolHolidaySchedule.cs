@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Entities;
-    public class SchoolHolidaySchedule// lịch nghỉ học
+    public class SchoolHolidaySchedule
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
