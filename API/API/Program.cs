@@ -1,15 +1,16 @@
-using System.Text;
-using System.Text.Json.Serialization;
+using AutoMapper;
 using API.Common.Mapping;
 using API.Entities;
-
-using API.Middlewares;
 using API.Repositories;
 using API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
+using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +58,18 @@ builder.Services.AddSwaggerGen(c =>
             new List<string>()
         }
     });
+});
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Description = "Standard Authorization header using the Bearer scheme bearer {token}",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+    });
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 // Đăng ký dịch vụ Controller để hỗ trợ API
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -131,19 +144,13 @@ if (app.Environment.IsDevelopment())
 }
 
 
-
-
 app.UseRouting();
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
-
-
 app.UseHttpsRedirection();
 app.UseCors("MyCors");
-
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

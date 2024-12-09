@@ -1,10 +1,11 @@
 ﻿using API.DTO;
 using API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
-    [Route("api/[controller]")]
+     [Route("api/[controller]")]
     [ApiController]
     public class GradeColumnController : ControllerBase
     { 
@@ -26,6 +27,7 @@ namespace API.Controllers;
                 return BadRequest(ex);
             }
         }
+        [Authorize(Policy = "GradeAuthorize")]
         [HttpGet]
         public async Task<IActionResult> GetGradeColumn()
         {
@@ -39,6 +41,7 @@ namespace API.Controllers;
                 return BadRequest(ex);
             }
         }
+        [Authorize(Policy = "GradeAuthorize")]
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetGradeById(int Id)
         {
@@ -52,6 +55,7 @@ namespace API.Controllers;
                 return BadRequest(ex);
             }
         }
+        [Authorize(Policy = "WriteGradeAuthorize")]
         [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteGrade(int Id)
         {
@@ -65,6 +69,7 @@ namespace API.Controllers;
                 return BadRequest(ex);
             }
         }
+        [Authorize(Policy = "WriteGradeAuthorize")]
         [HttpPut("{Id}")]
         public async Task<IActionResult> GetGrade(int Id, GradeColumnDTO gradeColumnDTO)
         {
@@ -78,5 +83,6 @@ namespace API.Controllers;
                 return BadRequest(ex);
             }
         }
+    
     }
 
