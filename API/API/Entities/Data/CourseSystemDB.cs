@@ -30,42 +30,46 @@ namespace API.Entities;
         public DbSet<EmployeeSalary> EmployeeSalaries { get; set; } = null!;
         public DbSet<Permission> Permissions { get; set; } = null!;
         public DbSet<RolePermission> RolePermissions { get; set; } = null!;
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Teacher>().ToTable("Teachers");
-            modelBuilder.Entity<Student>().ToTable("Students");
-            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
-            modelBuilder.Entity<Teacher>().HasIndex(T=> T.PhoneNumber).IsUnique();
-            modelBuilder.Entity<Student>().HasIndex(s => s.PhoneNumber).IsUnique();
-            modelBuilder.Entity<Teacher>().HasIndex(t=>t.IdentityCard ).IsUnique();
-
-            modelBuilder.Entity<SubjectClass>()
-                     .HasOne(sc => sc.Subject) 
-                    .WithMany() 
-                    .HasForeignKey(sc => sc.SubjectId)                    
-                    .OnDelete(DeleteBehavior.NoAction); 
-            modelBuilder.Entity<TeachSchedule>()
-                    .HasOne(ts => ts.Subject) 
-                   .WithMany()  
-                   .HasForeignKey(ts => ts.SubjectId); 
-            modelBuilder.Entity<TeachSchedule>()
+     protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Teacher>().ToTable("Teachers");
+    modelBuilder.Entity<Student>().ToTable("Students");
+    modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+    modelBuilder.Entity<Teacher>().HasIndex(t => t.PhoneNumber).IsUnique();
+    modelBuilder.Entity<Student>().HasIndex(s => s.PhoneNumber).IsUnique();
+    modelBuilder.Entity<Teacher>().HasIndex(t => t.IdentityCard).IsUnique();
+    // Mỗi SubjectClass sẽ có một Subject (One-to-Many), nhưng Subject không được xóa khi SubjectClass bị xóa
+    modelBuilder.Entity<SubjectClass>()
+                .HasOne(sc => sc.Subject) 
+                .WithMany() 
+                .HasForeignKey(sc => sc.SubjectId)                    
+                .OnDelete(DeleteBehavior.NoAction);
+    // Mỗi TeachSchedule sẽ có một Subject (One-to-Many)
+    modelBuilder.Entity<TeachSchedule>()
+                .HasOne(ts => ts.Subject) 
+                .WithMany()  
+                .HasForeignKey(ts => ts.SubjectId);
+    // Mỗi TeachSchedule sẽ liên kết với Subject qua TeachSchedules (One-to-Many)
+    // Subject không được xóa nếu TeachSchedule bị xóa
+    modelBuilder.Entity<TeachSchedule>()
                 .HasOne(ts => ts.Subject)               
                 .WithMany(s => s.TeachSchedules)        
                 .HasForeignKey(ts => ts.SubjectId)             
-                .OnDelete(DeleteBehavior.NoAction);    
-
-            modelBuilder.Entity<TeachSchedule>()
+                .OnDelete(DeleteBehavior.NoAction);
+    // Mỗi TeachSchedule liên kết với một Teacher (One-to-Many)
+    // Teacher không được xóa nếu TeachSchedule bị xóa
+    modelBuilder.Entity<TeachSchedule>()
                 .HasOne(ts => ts.Teacher)
                 .WithMany()
                 .HasForeignKey(ts => ts.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
-            
-            modelBuilder.Entity<SubjectClass>()
+    // Mỗi SubjectClass sẽ có một Subject (One-to-Many)
+    // Subject không được xóa nếu SubjectClass bị xóa
+    modelBuilder.Entity<SubjectClass>()
                 .HasOne(ts => ts.Subject)               
                 .WithMany(s => s.SubjectClasses)        
                 .HasForeignKey(ts => ts.SubjectId)
-                .OnDelete(DeleteBehavior.NoAction);     
-
-        }
+                .OnDelete(DeleteBehavior.NoAction);
+}
 
     }
