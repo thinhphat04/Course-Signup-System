@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Entities;
-    public class GradeType //Loại điểm số
+    public class GradeType 
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
@@ -11,7 +11,7 @@ namespace API.Entities;
         [StringLength(150)]
         public string GradeTypeName { get; set; } = null!;
 
-        public int Coefficient { get; set; } //hệ số
+        public int Coefficient { get; set; } 
 
         public ICollection<Grade> Grade { get; set; } = null!;
 

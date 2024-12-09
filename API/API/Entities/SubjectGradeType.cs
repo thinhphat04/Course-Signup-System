@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace API.Entities;
-    public class SubjectGradeType // diểm môn khôi
+    public class SubjectGradeType 
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]   
         [Key]
         public int Id { get; set; }
 
-        public int GradeColumn { get; set; } // số cột điểm
+        public int GradeColumn { get; set; }
 
-        public int MandatoryColumnGrade { get; set; }// số cột điểm bắt buộc
+        public int MandatoryColumnGrade { get; set; }
 
         public string CourseGroupId { get; set; } = null!;
         [ForeignKey("CourseGroupId")]

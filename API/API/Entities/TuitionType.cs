@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Entities;
-    public class TuitionType // loại học phí 
+    public class TuitionType 
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]

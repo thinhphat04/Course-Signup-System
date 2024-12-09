@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace API.Entities;
-    public class Faculty // khoa
+    public class Faculty 
     {
         [Key,StringLength(20)]
         public string FacultyId { get; set; } = null!;

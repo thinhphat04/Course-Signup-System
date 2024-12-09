@@ -9,11 +9,11 @@ namespace API.Entities;
         [Key]
         public int TuitionFeePaymentId { get; set; }
 
-        public double Tuition { get; set; } // học phí
+        public double Tuition { get; set; } 
 
-        public double Discount { get; set; }// giảm giá
+        public double Discount { get; set; }// coupon
 
-        public double Surcharge { set; get; }// phí phụ thu
+        public double Surcharge { set; get; }
 
         public double EffectiveChargeRate {  get; set; }
 

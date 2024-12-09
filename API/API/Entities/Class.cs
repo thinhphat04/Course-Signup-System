@@ -13,7 +13,7 @@ namespace API.Entities;
 
         public bool Status { get; set; }
 
-        public double Tuition { get; set; } //học phi
+        public double Tuition { get; set; } 
 
         public int NumberStudent { get; set; }
 

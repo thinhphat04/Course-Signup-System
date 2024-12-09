@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace API.Entities;
-    public class SubjectClass// môn học trong lớp và tổ bộ môn // danh sach mon hoc
+    public class SubjectClass
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]

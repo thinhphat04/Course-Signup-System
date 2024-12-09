@@ -9,10 +9,10 @@ namespace API.Entities;
         [StringLength(13)]
         public string UserId { get; set; } = null!;
         [StringLength(50)]
-        public string FirstName { get; set; } = null!; // Ten 
+        public string FirstName { get; set; } = null!; 
 
         [StringLength(50)]
-        public string LastName { get; set; } = null!; // Ho
+        public string LastName { get; set; } = null!; 
 
         [StringLength(255)]
         public string Email { get; set; } = null!;
